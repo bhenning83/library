@@ -1,0 +1,14 @@
+.content-box {
+  width: 100vw
+}
+
+.cards-container {
+  width: 80rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.card {
+  width: 25rem;
+}
