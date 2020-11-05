@@ -1,14 +1,22 @@
-.content-box {
-  width: 100vw
-}
 
-.cards-container {
-  width: 80rem;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
+.cards-box {
+  background: lightblue;
 }
 
 .card {
-  width: 25rem;
+  width: 18rem;
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  background: lightcoral
+}
+
+@media only screen and (max-width: 991px) {
+  .card {
+    width: 48%;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .card {
+    width: 100%;
+  }
 }
