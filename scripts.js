@@ -113,8 +113,12 @@ showLibrary();
 
 dbRefObject.on('value', snap => {
   if (snap.exists() == false) {
+    console.log('it says no')
+    console.log(snap.val())
     database.ref().set(myLibrary)
   } else {
+    console.log(snap.val())
+    console.log(snap.exists())
     myLibrary = snap.val();
   }
 });
