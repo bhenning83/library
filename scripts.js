@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 let database = firebase.database();
 
-const dbRefObject = database.ref().child('object');
+const dbRefObject = database.ref();
 saveLibrary = () => database.ref().set(myLibrary);
 
 function Book(title, author, pages, read) {
