@@ -71,7 +71,7 @@ function showLibrary() {
     let del = makeDelButton();
     card.appendChild(del);
   });
-  saveLibrary;
+  saveLibrary();
 }
 
 function makeDelButton() {
