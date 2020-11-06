@@ -1,5 +1,23 @@
 let myLibrary = [];
 
+var firebaseConfig = {
+  apiKey: "AIzaSyCDLxoWNQM9IsQC9-WFQy_joqcdBWzWjCk",
+  authDomain: "library-41aba.firebaseapp.com",
+  databaseURL: "https://library-41aba.firebaseio.com",
+  projectId: "library-41aba",
+  storageBucket: "library-41aba.appspot.com",
+  messagingSenderId: "273428719470",
+  appId: "1:273428719470:web:f13d601edf20f78e2d437f",
+  measurementId: "G-R7Z3V222XZ"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+let database = firebase.database();
+
+const dbRefObject = database.ref().child('object');
+saveLibrary = () => database.ref().set(myLibrary);
+
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -53,7 +71,7 @@ function showLibrary() {
     let del = makeDelButton();
     card.appendChild(del);
   });
-  database.ref().set(myLibrary);
+  saveLibrary;
 }
 
 function makeDelButton() {
@@ -92,24 +110,6 @@ mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
 lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
 myLibrary.push(EastofEden, god, mind, lotr);
 showLibrary();
-
-var firebaseConfig = {
-  apiKey: "AIzaSyCDLxoWNQM9IsQC9-WFQy_joqcdBWzWjCk",
-  authDomain: "library-41aba.firebaseapp.com",
-  databaseURL: "https://library-41aba.firebaseio.com",
-  projectId: "library-41aba",
-  storageBucket: "library-41aba.appspot.com",
-  messagingSenderId: "273428719470",
-  appId: "1:273428719470:web:f13d601edf20f78e2d437f",
-  measurementId: "G-R7Z3V222XZ"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-let database = firebase.database();
-
-const dbRefObject = database.ref().child('object');
-saveLibrary => database.ref().set(myLibrary);
 
 dbRefObject.on('value', snap => {
   if (snap.exists() == false) {
