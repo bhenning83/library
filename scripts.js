@@ -112,11 +112,13 @@ function changeRead(e) {
 
 
 dbRefObject.on('value', snap => {
-  if (snap.exists() == false) {
-    database.ref().set(myLibrary)
-  } else {
+  if (snap.exists()) {
+    console.log(snap)
     myLibrary = snap.val();
-  }
+  } else {
+    console.log(snap)
+    database.ref().set(myLibrary)
+  } 
 });
 
 showLibrary();
