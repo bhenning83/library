@@ -53,6 +53,7 @@ function showLibrary() {
     let del = makeDelButton();
     card.appendChild(del);
   });
+  database.ref().set(myLibrary);
 }
 
 function makeDelButton() {
@@ -108,6 +109,7 @@ firebase.analytics();
 database = firebase.database();
 
 const dbRefObject = database.ref().child('object');
+saveLibrary => database.ref().set(myLibrary);
 
 dbRefObject.on('value', snap => {
   if (snap.exists() == false) {
