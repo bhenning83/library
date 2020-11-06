@@ -104,23 +104,20 @@ function changeRead(e) {
   showLibrary();
 }
 
-EastofEden = new Book('East of Eden', 'John Steinbeck', 420, true);
-god = new Book('The God Delusion', 'Richard Dawkins', 345, true);
-mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
-lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
-myLibrary.push(EastofEden, god, mind, lotr);
-showLibrary();
+// EastofEden = new Book('East of Eden', 'John Steinbeck', 420, true);
+// god = new Book('The God Delusion', 'Richard Dawkins', 345, true);
+// mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
+// lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
+// myLibrary.push(EastofEden, god, mind, lotr);
+
 
 dbRefObject.on('value', snap => {
   if (snap.exists() == false) {
-    console.log('it says no')
-    console.log(snap.val())
     database.ref().set(myLibrary)
   } else {
-    console.log(snap.val())
-    console.log(snap.exists())
     myLibrary = snap.val();
   }
 });
 
+showLibrary();
 
