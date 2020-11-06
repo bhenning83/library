@@ -53,7 +53,7 @@ function showLibrary() {
     let del = makeDelButton();
     card.appendChild(del);
   });
-  database.ref().set(myLibrary);
+  saveLibrary;
 }
 
 function makeDelButton() {
