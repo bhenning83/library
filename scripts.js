@@ -106,7 +106,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-database = firebase.database();
+let database = firebase.database();
 
 const dbRefObject = database.ref().child('object');
 saveLibrary => database.ref().set(myLibrary);
