@@ -4,18 +4,18 @@
 }
 
 .card {
-  width: 18rem;
+  width: 49%;
   padding: 1rem 1.5rem;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   background: lightcoral
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (min-width: 992px) {
   .card {
-    width: 48%;
+    width: 32%;
   }
 }
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 767px) {
   .card {
     width: 100%;
   }

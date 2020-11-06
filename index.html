@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row justify-content-center">
       <button type="button" class="btn btn-success mb-2" data-toggle="collapse" data-target="#form">Add Book</button>
     </div>
@@ -46,13 +46,35 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="cards-box col-12 col-md-11 col-xl-9 d-flex justify-content-between flex-wrap">
+      <div class="cards-box col-12 col-md-11 d-flex justify-content-between flex-wrap">
       </div>
     </div>
   </div>
-    
-   
-  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyCDLxoWNQM9IsQC9-WFQy_joqcdBWzWjCk",
+      authDomain: "library-41aba.firebaseapp.com",
+      databaseURL: "https://library-41aba.firebaseio.com",
+      projectId: "library-41aba",
+      storageBucket: "library-41aba.appspot.com",
+      messagingSenderId: "273428719470",
+      appId: "1:273428719470:web:f13d601edf20f78e2d437f",
+      measurementId: "G-R7Z3V222XZ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </body>
 <script type= 'text/javascript' src='scripts.js'></script>
+<script type='text/javascript' src="firebase.js"></script>
 </html>
