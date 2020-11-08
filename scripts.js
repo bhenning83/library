@@ -112,8 +112,8 @@ function changeRead(e) {
 
 let loaded = false;
 dbRefObject.on('value', snap => {
-  snap.forEach(childNodes => {
-    if (loaded == false) {
+  if (loaded == false) {
+    snap.forEach(childNodes => {
       let title = childNodes.val().title;
       let author = childNodes.val().author;
       let pages = childNodes.val().pages;
@@ -121,8 +121,10 @@ dbRefObject.on('value', snap => {
 
       let book = new Book(index, title, author, pages, read);
       myLibrary.push(book);
-    }
-  });
+    }) 
+  } else {
+    myLibaray = database.ref();
+  }
   loaded = true;
 });
 
