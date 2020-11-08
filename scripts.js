@@ -110,15 +110,20 @@ function changeRead(e) {
 // lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
 // myLibrary.push(EastofEden, god, mind, lotr);
 
-
+let loaded = false;
 dbRefObject.on('value', snap => {
-  if (snap.exists()) {
-    console.log(snap)
-    myLibrary = snap.val();
-  } else {
-    console.log(snap)
-    database.ref().set(myLibrary)
-  } 
+  snap.forEach(childNodes => {
+    if (loaded == false) {
+      let title = childNodes.val().title;
+      let author = childNodes.val().author;
+      let pages = childNodes.val().pages;
+      let read =childNodes.val().read;
+
+      let book = new Book(index, title, author, pages, read);
+      myLibrary.push(book);
+    }
+  });
+  loaded = true;
 });
 
 showLibrary();
