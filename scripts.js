@@ -106,26 +106,22 @@ function changeRead(e) {
   saveLibrary();
 }
 
-EastofEden = new Book('East of Eden', 'John Steinbeck', 420, true);
-god = new Book('The God Delusion', 'Richard Dawkins', 345, true);
-mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
-lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
-myLibrary.push(EastofEden, god, mind, lotr);
+function setInitLib() {
+  EastofEden = new Book('East of Eden', 'John Steinbeck', 420, true);
+  god = new Book('The God Delusion', 'Richard Dawkins', 345, true);
+  mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
+  lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
+  myLibrary.push(EastofEden, god, mind, lotr);
+}
 
-let loaded = false;
-dbRefObject.on('value', snap => {
-  if (loaded == false) {
-    snap.forEach(childNodes => {
-      let title = childNodes.val().title;
-      let author = childNodes.val().author;
-      let pages = childNodes.val().pages;
-      let read =childNodes.val().read;
 
-      let book = new Book(index, title, author, pages, read);
-      myLibrary.push(book);
-    }) 
-  }
-  loaded = true;
+dbRefObject.on('value', function(snap) {
+  if (snap.exists) {
+      myLibrary = snap.val();
+  } else {
+    myLibrary = setInitLib();
+    database.ref().set(myLibrary);
+  };
 });
 
 showLibrary();
