@@ -122,7 +122,7 @@ dbRefObject.on('value', function(snap) {
     myLibrary = setInitLib();
     database.ref().set(myLibrary);
   };
+  showLibrary();
 });
 
-showLibrary();
 
