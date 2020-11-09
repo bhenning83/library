@@ -74,6 +74,7 @@ function showLibrary() {
     const buttonBox = document.createElement('div');
     buttonBox.classList.add('button-box')
     card.id = i;
+    card.style.background = '#e9ecef'
     let readStatus = '';
     if (book.read == true) readStatus = 'Already read it';
     if (book.read == false) readStatus = "Haven't read it yet";
@@ -119,6 +120,7 @@ function makeDelButton(book) {
   del.innerText = 'Delete';
   del.classList.add('btn');
   del.classList.add('btn-danger');
+  del.classList.add('del');
   del.addEventListener('click', function() {
     removeBook(book)
   })
@@ -137,7 +139,9 @@ function makeToggleButton(book) {
   tog = document.createElement('button')
   tog.innerText = 'Change read status';
   tog.classList.add('btn');
-  tog.style.background = '#99dc35';
+  tog.classList.add('toggle');
+  tog.style.background = 'gray';
+  tog.style.color = 'white';
   tog.addEventListener('click', function() {
     toggleRead(book)
   });
