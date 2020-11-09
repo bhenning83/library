@@ -1,4 +1,6 @@
 let myLibrary = [];
+let indexValue = 4;
+let loaded = false
 
 var firebaseConfig = {
   apiKey: "AIzaSyCDLxoWNQM9IsQC9-WFQy_joqcdBWzWjCk",
@@ -15,39 +17,52 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 let database = firebase.database();
 
-const dbRefObject = database.ref();
-saveLibrary = () => database.ref().set(myLibrary);
+database.ref().on('value', function(snap){
+  if (loaded == false) {
+    snap.forEach(function(childNodes){
+      let index = childNodes.val().index;
+      let title = childNodes.val().title;
+      let author = childNodes.val().author;
+      let pages = childNodes.val().pages;
+      let read = childNodes.val().read;
 
-function Book(title, author, pages, read) {
+      let book = new Book(index, title, author, pages, read);
+      myLibrary.push(book);
+
+      indexValue++; //to avoid repeat usage of an index number
+    });
+  }
+  loaded = true;
+  if (loaded == true && myLibrary.length == 0) {
+    setInitLib();
+    console.log(myLibrary.length)
+  }
+  showLibrary();
+});
+
+function setInitLib() {
+  writeData(0, 'East of Eden', 'John Steinbeck', 420, true);
+  writeData(1, 'A Brief History of Time', 'Stephen Hawking', 345, true);
+  writeData(2, 'The Catcher in the Rye', 'J. D. Salinger', 400, true);
+  writeData(3, 'Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 300, false);
+}
+
+function writeData(index, title, author, pages, read) {
+	firebase.database().ref(index).set({
+    index: index,
+		title: title,
+		author: author,
+		pages: pages,
+		read: read
+	});
+}
+
+function Book(index, title, author, pages, read) {
+  this.index = index;
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-}
-
-Book.prototype.toggleRead = function() {
-  this.read = !this.read;
-};
-
-const form = document.querySelector('form')
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  addBookToLibrary();
-  form.reset();
-  showLibrary();
-});
-
-function addBookToLibrary() {
-  let book = new Book(
-    form.title.value,
-    form.author.value,
-    form.pages.value,
-    form.read.checked
-    );
-
-  myLibrary.push(book);
-  saveLibrary();
 }
 
 function showLibrary() {
@@ -66,63 +81,75 @@ function showLibrary() {
                       ${readStatus}`;
     cards.appendChild(card);
 
-    let toggle = makeToggleButton();
+    let toggle = makeToggleButton(book);
     card.appendChild(toggle);
 
-    let del = makeDelButton();
+    let del = makeDelButton(book);
     card.appendChild(del);
   });
 }
 
-function makeDelButton() {
+const form = document.querySelector('form')
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  addBookToLibrary();
+  form.reset();
+  showLibrary();
+});
+
+function addBookToLibrary() {
+  let title = form.title.value;
+  let author = form.author.value;
+  let pages = form.pages.value;
+  let read = form.read.checked;
+  
+  let book = new Book(indexValue, title, author, pages, read);
+
+  myLibrary.push(book);
+  writeData(indexValue, title, author, pages, read);
+  indexValue++;
+}
+
+function makeDelButton(book) {
   del = document.createElement('button');
   del.innerText = 'Delete';
   del.classList.add('btn');
   del.classList.add('btn-danger');
-  del.addEventListener('click', removeBook)
+  del.addEventListener('click', function() {
+    removeBook(book)
+  })
   return del;
 }
 
-function makeToggleButton() {
+function removeBook(book) {
+  idx = myLibrary.indexOf(book);
+  myLibrary.splice(idx, 1);
+  showLibrary();
+
+  database.ref(book.index).remove();
+}
+
+function makeToggleButton(book) {
   tog = document.createElement('button')
   tog.innerText = 'Change read status';
   tog.classList.add('btn');
   tog.classList.add('btn-light');
-  tog.addEventListener('click', changeRead);
+  tog.addEventListener('click', function() {
+    toggleRead(book)
+  });
   return tog;
 }
 
-function removeBook(e) {
-  let idx = e.target.parentNode.id
-  myLibrary.splice(idx, 1);
+function toggleRead(book) {
+  book.read = !book.read;
+  database.ref(book.index).update({
+    read: book.read
+  });
   showLibrary();
-  saveLibrary();
-}
-
-function changeRead(e) {
-  console.log(e.target.parentNode.parentNode.parentNode)
-  myLibrary[e.target.parentNode.id].toggleRead();
-  showLibrary();
-  saveLibrary();
-}
-
-function setInitLib() {
-  EastofEden = new Book('East of Eden', 'John Steinbeck', 420, true);
-  god = new Book('The God Delusion', 'Richard Dawkins', 345, true);
-  mind = new Book('How to Change Your Mind', 'Michael Pollen', 400, true);
-  lotr = new Book('Lord of the Rings: the Fellowship of the Ring', 'JRR Tolkein', 296, false);
-  myLibrary.push(EastofEden, god, mind, lotr);
 }
 
 
-dbRefObject.on('value', function(snap) {
-  if (snap.exists) {
-      myLibrary = snap.val();
-  } else {
-    myLibrary = setInitLib();
-    database.ref().set(myLibrary);
-  };
-  showLibrary();
-});
+
+
 
 
