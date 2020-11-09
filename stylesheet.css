@@ -1,13 +1,23 @@
 
 .cards-box {
-  background: lightblue;
+  background: lightgoldenrodyellow;
 }
 
 .card {
   width: 49%;
+  height: 18rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 1rem 1.5rem;
   margin: 1.5rem 0;
-  background: lightcoral
+  background: lightcoral;
+}
+
+.button-box {
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 992px) {

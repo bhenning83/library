@@ -71,6 +71,8 @@ function showLibrary() {
   myLibrary.forEach((book, i) => {
     const card = document.createElement('div');
     card.classList.add('card');
+    const buttonBox = document.createElement('div');
+    buttonBox.classList.add('button-box')
     card.id = i;
     let readStatus = '';
     if (book.read == true) readStatus = 'Already read it';
@@ -81,11 +83,13 @@ function showLibrary() {
                       ${readStatus}`;
     cards.appendChild(card);
 
+    card.appendChild(buttonBox);
+
     let toggle = makeToggleButton(book);
-    card.appendChild(toggle);
+    buttonBox.appendChild(toggle);
 
     let del = makeDelButton(book);
-    card.appendChild(del);
+    buttonBox.appendChild(del);
   });
 }
 
@@ -133,7 +137,7 @@ function makeToggleButton(book) {
   tog = document.createElement('button')
   tog.innerText = 'Change read status';
   tog.classList.add('btn');
-  tog.classList.add('btn-light');
+  tog.style.background = '#99dc35';
   tog.addEventListener('click', function() {
     toggleRead(book)
   });
