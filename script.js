@@ -70,6 +70,13 @@ class Book {
 
   toggleRead() {
     this.read = !this.read;
+    db.writeData(
+      this.index, 
+      this.title, 
+      this.author, 
+      this.pages,
+      this.read
+    );
   }
 }
 
